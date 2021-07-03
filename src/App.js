@@ -1,25 +1,36 @@
 import logo from './logo.svg';
 import './App.css';
+import Navbar from './components/Navbar';
+import CountriesList from './components/CountriesList';
+import CountryDetails from './components/CountryDetails';
+import React, { Component } from 'react';
+import { Switch , Route } from 'react-router';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import countries from './countries.json';
+
+class App extends Component {
+  state={
+    oppned: false,
+    country: countries[0]
+  }
+  callbackFunction =(data)=>{
+    console.log(data);
+    this.setState({country: data})
+}
+  render() {
+    return (
+      <div className="App">
+        <Navbar />
+        <div className="container">
+          <div className="row">
+            <CountriesList countries={countries} parentCallback = {this.callbackFunction}/>
+
+            <CountryDetails dataFromParent ={this.state.country}/>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
